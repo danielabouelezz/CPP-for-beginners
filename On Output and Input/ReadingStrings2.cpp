@@ -12,8 +12,8 @@ int main()
 
     getline(cin, firstName, '|');
     getline(cin, secondName, '|');
-    
-    cin.ignore();
+
+    cin.ignore(); //clear bugger bofore reading the next input
     cin>>salary;
 
     cout<<firstName<<"\n";
