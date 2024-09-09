@@ -11,7 +11,7 @@ int main()
     cin >> firstName>>secondName;
     cout<<"Entered name: "<<firstName<<" "<< secondName <<"\n\n";
 
-    getline(cin, line1); //read the entered string.
+    getline(cin, line1); //read the enter.
 
     getline(cin, line1);
     cout<<"Line1 data: "<<line1<<"\n\n";
