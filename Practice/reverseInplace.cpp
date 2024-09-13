@@ -42,21 +42,27 @@ void TEST_reverseInplace()
     int arr[SIZE]; 
     int test[SIZE];
 
-    for(int i{0}; i < 1000; ++i)
+    int usedSize = SIZE;
+
+    for(int k{0}; k < 2; ++k)
     {
-        for(int j{0}; j < SIZE; ++j)
+        for(int i{0}; i < 1000; ++i)
         {
-            int temp = rand() % 100; 
-            arr[j] = temp;
-            test[j] = temp;
-        }
+            for(int j{0}; j < usedSize; ++j)
+            {
+                int temp = rand() % 100; 
+                arr[j] = temp;
+                test[j] = temp;
+            }
 
-        reverseInplace(arr, SIZE);
+            reverseInplace(arr, usedSize);
 
-        for(int j{0}; j < SIZE; ++j)
-        {
-            assert(test[j] == arr[SIZE - j -1]);
+            for(int j{0}; j < usedSize; ++j)
+            {
+                assert(test[j] == arr[usedSize - j -1]);
+            }
         }
+        --usedSize;
     }
     std::cout<<"\nPerfect\n";
 }
