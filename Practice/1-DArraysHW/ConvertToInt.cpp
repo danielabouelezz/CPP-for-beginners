@@ -28,7 +28,7 @@ int convertToInt(std::string& example)
 }
 int main()
 {
-    std::string example = "156a";
+    std::string example = "156";
     int result = convertToInt(example);
     std::cout<<result;
 }
