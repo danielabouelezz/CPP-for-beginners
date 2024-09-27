@@ -5,7 +5,7 @@
 
 typedef std::vector<int> vi;
 
-void printVec(vi v, const std::string st)
+void printVec(vi v, const std::string st = "")
 {
     std::cout<<st<<" ";
     vi::iterator it = v.begin();
@@ -16,7 +16,7 @@ void printVec(vi v, const std::string st)
     }
     std::cout<<"\n";
 }
-
+bool isEqual(int x, int y) { return x == y;}
 bool isOdd(int n) { return n%2 != 0;}
 
 // In fact lots of these examples are applicable to any 
@@ -136,6 +136,45 @@ void vectorManipulation()
     v1.clear();
     partial_sum(all(v2), back_inserter(v1), std::minus<int>());
     printVec(v1, "Substracting array: ");
+
+
+    // Writing to a stream
+    std::ostringstream oss1; 
+    partial_sum(all(v2), std::ostream_iterator<int>(oss1, " "));
+    std::cout<<"Accumulative array in string: " <<oss1.str()<<"\n"; // 27 68 149 the partial accumulation
+
+    printVec(v1, "V1: ");
+    printVec(v2, "V2: ");
+    adjacent_difference(all(v2) ,v1.begin()); // the difference between each value and the value in the previous index stored in v1
+    printVec(v1, "Adjacent_difference: ");
+
+    adjacent_difference(all(v2), v1.begin(), std::plus<int>()); // Each index is the sum of itsel and the previous index
+    printVec(v1, "Adjacent_sum: ");
+    
+    it = adjacent_find(all(v2), isEqual); //  find first 2 adjacent elements who are EQUAL based on equal function
+    if(it != v2.end())
+        std::cout<< "The 2 adjacent values are: "<< *it <<" " <<*(it +1) <<"\n";
+
+    v2.insert(v2.begin(), 6);
+    v2.insert(v2.begin()+3, 6);
+    v2.push_back(6);
+
+    printVec(v2, "V2: ");
+
+    std::cout<<"Count of 6: "<<count(all(v2), 6)<<"\n";
+    count_if(all(v2), isOdd); //isOdd is a function called for each element in v2
+
+    v2.erase(remove(all(v2), 6), v2.end()); // remove all 6, and preserve order
+    printVec(v2, "Remove 6s: ");
+
+    rotate(v2.begin(), v2.begin() +1, v2.end()); // rotate Direction <--
+    printVec(v2, "Rotate: ");
+
+    // In case listing all next_permutaion, you must Sort input first
+    sort(all(v2)); 
+    do{
+        printVec(v2, "Perm: ");
+    }while(next_permutation(all(v2))); // permutate on any given iterator with compare function
 }
 
 int main()
