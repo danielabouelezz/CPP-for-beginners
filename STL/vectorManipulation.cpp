@@ -82,6 +82,60 @@ void vectorManipulation()
 
     // Set_intersection/ set_difference/ set_union/ set_symmetric_difference 
     // must applied on sorted array aswell
+
+    v2 = v1; 
+    v2.push_back(v2.back());
+    v2.push_back(v2.back()+20);
+    v2.push_back(v2.back() +7);
+    printVec(v2, "V2: ");
+    std::vector<int> v;
+
+    set_intersection(all(v2), all(v1), back_inserter(v)); // back_inserter fills the v vector with the intersection
+    printVec(v, "Set_intersection: ");
+    
+    v.clear();
+    set_difference(all(v2), all(v1), back_inserter(v));
+    printVec(v, "Set_difference: "); // what happens if v1 is proper subset of v2? ans: v is empy.
+
+    v.clear();
+    set_union(all(v2), all(v1), back_inserter(v));
+    printVec(v, "Set_union: ");
+
+    ////////////////////////////////////////////////////
+
+    int mx = *max_element(v2.begin(), v2.end());
+    int mn = *min_element(v2.begin(), v2.end());
+
+    std::cout<< "Maximum: "<< mx<< " Minimum: "<< mn<<"\n";
+    printVec(v1, "V1: ");
+    printVec(v2, "V2: ");
+
+    swap_ranges(v1.end()-2, v1.end(), v2.begin()); // you could swap from different vectors
+    printVec(v1, "Range swaps: ");
+
+    v2.clear();
+    v2.push_back(1);
+    v2.push_back(3);
+    v2.push_back(4);
+    printVec(v2, "New v2: ");
+
+    int vecSum = accumulate(all(v2), 0); // return array SUM
+    int vecMul = accumulate(all(v2), 1, std::multiplies<int>()); // return array product
+
+    int sumOfProducts1 = inner_product(all(v2), v2.begin(), 0); // inner product: v1[0] * v1[0] + v2[0] * v2[0]...
+    int sumOfProducts2 = inner_product(all(v2), v2.begin(), 0, std::plus<int>(), std::multiplies<int>()); // same as above
+    int productsOfSum = inner_product(all(v2), v2.begin(), 1, std::multiplies<int>(), std::plus<int>()); // 1 * (v1[0] + v1[0]) * (v2[0] + v2[0])
+    // 0, 1, 0 are the initial value for accumulation. 
+
+    std::cout<<"VecSum: "<<vecSum<<" VecMul: "<< vecMul <<" SumOfProducts: "<< sumOfProducts1<<" ProductsOfSum: "<< productsOfSum<<"\n"; 
+    
+    v1.clear();
+    partial_sum(all(v2), back_inserter(v1));
+    printVec(v1, "Accumulative array: ");
+
+    v1.clear();
+    partial_sum(all(v2), back_inserter(v1), std::minus<int>());
+    printVec(v1, "Substracting array: ");
 }
 
 int main()
