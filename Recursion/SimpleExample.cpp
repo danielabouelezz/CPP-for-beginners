@@ -171,7 +171,7 @@ int main()
     // std::cout<<result<<std::endl;
     //generateBinary(3);
     //generateTernary(2);
-    int vis[100] = {0}; 
+    /*int vis[100] = {0}; 
     int cur[100] = {0}; 
-    perm(0, 5, vis, cur);
+    perm(0, 5, vis, cur);*/
 }
