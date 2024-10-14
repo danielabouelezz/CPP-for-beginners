@@ -90,6 +90,74 @@ int maxpathSum(int r, int c)
     return grid[r][c] + std::max(path1, path2); 
 }
 
+/*
+    Typical backtracking procedure
+    void recursion(state s)
+    {
+        if(base(s))
+            return;
+        
+        for each substate ss
+            mark s
+        
+        recursion(ss)
+
+        unmark ss
+    }
+ */
+
+// Generate all sequences of given length, of zeros and ones
+// E.g. for len = 3: 000, 001, 010, 011, 100, 101, 110, 111
+void generateBinary(int len, std::string cur = "")
+{
+    if(len == 0)
+    {
+        std::cout<<cur<<"\n";
+        return; 
+    }
+
+    generateBinary(len -1, cur + "0"); 
+    generateBinary(len -1, cur + "1"); 
+}
+
+// Generate all sequences of given length, of zeros, ones and twos
+// E.g. for len = 2: 00, 01, 02, 10, 11, 12, 20, 21, 22
+
+void generateTernary(int len, std::string cur = "")
+{
+    if(len == 0)
+    {
+        std::cout<<cur<<"\n";
+        return; 
+    }
+
+    generateTernary(len -1, cur + "0");
+    generateTernary(len -1, cur + "1");
+    generateTernary(len -1, cur + "2");
+}
+
+// Pring all possible permutations of numbers 0, 1, 2, .... n-1
+
+void perm(int i, int n, int vis[], int cur[])
+{
+    if(i == n)
+    {
+        for(int j{0}; j < n; ++j)
+            std::cout<<cur[j];
+        std::cout<<"\n";
+        return; 
+    }
+
+    for(int j = 0; j < n; ++j)  if(!vis[j])
+    {
+        vis[j] = 1; 
+        cur[i] = j; 
+
+        perm(i+1, n, vis, cur); 
+        vis[j] = 0; 
+    }
+}
+
 int main()
 {
     // Explanation(5); 
@@ -98,7 +166,12 @@ int main()
     // triangle(7);
     // reverseTrianlge(7);
     // std::cout<<F3n_1(22);
-    createGRid(); 
-    int result = maxpathSum(0, 0); 
-    std::cout<<result<<std::endl;
+    // createGRid(); 
+    // int result = maxpathSum(0, 0); 
+    // std::cout<<result<<std::endl;
+    //generateBinary(3);
+    //generateTernary(2);
+    int vis[100] = {0}; 
+    int cur[100] = {0}; 
+    perm(0, 5, vis, cur);
 }
