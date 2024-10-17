@@ -48,15 +48,6 @@ int bitLength(int n)
     return std::floor(std::log2(n)) + 1;
 }
 
-void printNumber(int n, int len)
-{
-    if(!len)
-        return;
-    printNumber(n >> 1, len -1); // remove last bit
-    std::cout<<(n&1);   //print last bit
-}
-
-
 // gets the length of bits that forms the number
 int countNumBits(int mask)
 {
@@ -69,6 +60,14 @@ int countNumBits(int mask)
         ret++;
     }
     return ret;
+}
+
+void printNumber(int n)
+{
+    if(!n) return; 
+
+    printNumber(n >> 1); 
+    std::cout<<(n & 1); 
 }
 
 // Let's count bits
@@ -87,9 +86,41 @@ int countNumBits1(int mask) // counting the 1 bits
     return ret; 
 }
 
+// Get bit
+int getBit(int num, int idx)
+{
+    return ((num >> idx) & 1) == 1;  // 110100, idx = 4 --> 110 & 1 = 0
+}
+
+int setBit1(int num, int idx)
+{
+    return num | (1 << idx); 
+}
+
+int setBit0(int num, int idx)
+{
+    return num & ~(1 << idx); // 110100, idx = 3 --> 110100 & ~000100 = 110100 & 111011
+}
+
+int flipBit(int num, int idx)
+{
+    return num ^ (1 << idx); 
+}
+
+// rotate a bit to right. 0000000000000000000011001101110 -> rotate 5 -> 01110000000000000000110011 
+
+int rotate(int num, int idx)
+{
+    const int bitNum = 32; 
+
+    return num >> idx | num << (bitNum - idx); 
+}
+
 int main()
 {
-    printNumber(26, countNumBits(26));
-    std::cout<<"\n";
-   std::cout<<countNumBits1(26); 
+    // printNumber(26, countNumBits(26));
+    // std::cout<<"\n";
+    // std::cout<<countNumBits1(26); 
+    int num = rotate(0b0000000000000000000011001101110, 5); 
+    printNumber(num); 
 }
