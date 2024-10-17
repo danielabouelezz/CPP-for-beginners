@@ -62,11 +62,19 @@ int countNumBits(int mask)
     return ret;
 }
 
-void printNumber(int n)
+void printNumber(int n, int len)
+{
+    if(!len)    return; 
+
+    printNumber(n >> 1, len-1); 
+    std::cout<<(n&1); 
+}
+
+void printNumber_method2(int n)
 {
     if(!n) return; 
 
-    printNumber(n >> 1); 
+    printNumber_method2(n >> 1); 
     std::cout<<(n & 1); 
 }
 
@@ -116,11 +124,49 @@ int rotate(int num, int idx)
     return num >> idx | num << (bitNum - idx); 
 }
 
+/*
+X -1 is very important!
+
+X   = 840  = 01101001000
+X-1 = 839  = 01101000111    What happened? First bit 16 = (2^4) is removed, and 15 = 2^4-1 is added
+
+X & (X-1)  = 01101000000    First bit from right removed
+
+X & ~(X-1) = 01101001000 & 10010111000 = 00000001000 value of 1 << bitIndex
+*/
+
+int countNumBits2(int mask) // 0(bits Count)    _builtin_popcount
+{
+    int ret = 0; 
+    while(mask)
+    {
+        mask &= (mask -1); 
+        ++ret; // Simply remove the last bit and so on
+    }
+    return ret; 
+}
+
+// len = 3: 000, 001, 010, 011, 100, 101, 110, 111
+
+void printAllSubsets(int len) // Remember we did it recursively. This is much simpler!
+{
+    for(int i{0}; i < (1 << len); ++i)
+    {
+        printNumber(i, len);
+        std::cout<<" ";  
+    }
+
+    // For reversed order. Either reverse each item or work from big to small
+    // for (int i = (1<<len)-1; i >= 0; --i)
+    // printNumber(i)
+}
+
 int main()
 {
     // printNumber(26, countNumBits(26));
     // std::cout<<"\n";
     // std::cout<<countNumBits1(26); 
-    int num = rotate(0b0000000000000000000011001101110, 5); 
-    printNumber(num); 
+    // int num = rotate(0b0000000000000000000011001101110, 5); 
+    // printNumber_method2(num); 
+    printAllSubsets(3); 
 }
