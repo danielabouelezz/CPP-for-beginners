@@ -135,7 +135,7 @@ X & (X-1)  = 01101000000    First bit from right removed
 X & ~(X-1) = 01101001000 & 10010111000 = 00000001000 value of 1 << bitIndex
 */
 
-int countNumBits2(int mask) // 0(bits Count)    _builtin_popcount
+int countNumBits2(int mask) // 0(bits Count)    __builtin_popcount
 {
     int ret = 0; 
     while(mask)
@@ -161,6 +161,92 @@ void printAllSubsets(int len) // Remember we did it recursively. This is much si
     // printNumber(i)
 }
 
+/*
+Gray code: is a binary numeral system where two successive values differ in only one bit
+
+Binary       Gray Code
+0000         0000       0
+0001         0001       1
+0010         0011       2
+0011         0010       1
+0100         0110       2
+0101         0111       3
+0110         0101       2
+0111         0100       1
+1000         1100       2
+1001         1101       3
+1010         1111       4
+1011         1110       3
+1100         1010       2
+1101         1011       3
+1110         1001       2
+1111
+
+Build it incrementally, Let's see for len = 1
+0 
+1
+
+Great. For len = 1 we have correct List. For length 2, we know we need to add prefix 0 and 1 so doubling list
+00
+01
+10
+11
+Great ,Len = 2 also works well. 
+
+For length 3: 
+
+000
+001
+010
+011
+100
+101
+110
+111
+
+Failed. Note. We know 1st 4 numbers are correct. As the bits count did not change. Same for 2nd 4 numbers. All incremented 1. 
+Problem when moved from 4th to 5th. The point, they will always be 0111111 and 100000. 
+what about reversing 2nd list, so we got the biggest 111111 one beside end of 1st block 011111. 
+
+So all what we need. Given answer of list N-1. To generate N. use 0N + 1N' where N' is reverse list. 
+If we built the list incrementally including from N = 2 we got. 
+0000        0000    0
+0001        0001    1
+0010        0011    2
+0011        0010    1
+0100        0110    2
+0101        0111    3
+0110        0101    2
+0111        0100    1
+1000        1100    2
+1001        1101    3
+1010        1111    4
+1011        1110    3
+1100        1010    2
+1101        1011    3
+1110        1001    2
+
+By observation, in gray code, every bit is Xor of its bit and next one.
+*/
+
+int grayCode(int i)
+{
+    return i ^ (i >> 1); 
+}
+
+void printAllSubsetsGray(int len)
+{
+    for(int i{0}; i < (1 << len)-1; ++i)
+    {
+        printNumber(i, len); 
+        std::cout<<"\t\t"; 
+
+        printNumber(grayCode(i), len); 
+
+        std::cout<<"\t" <<__builtin_popcount(grayCode(i)); 
+        std::cout<<"\n"; 
+    }
+}
 int main()
 {
     // printNumber(26, countNumBits(26));
@@ -168,5 +254,6 @@ int main()
     // std::cout<<countNumBits1(26); 
     // int num = rotate(0b0000000000000000000011001101110, 5); 
     // printNumber_method2(num); 
-    printAllSubsets(3); 
+    //printAllSubsets(3); 
+    printAllSubsetsGray(4); 
 }
