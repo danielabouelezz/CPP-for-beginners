@@ -43,8 +43,63 @@ void pointers_and_arrays()
     std::cout<<*pArr<<"\n"; // We can increment pointer => 6
     //arr++; // COMPILE ERROR
 }
+
+void print(int* arr)
+{
+    for(int i{0}; i < 5; ++i)
+    {
+        std::cout<<*(arr + i)<<" "; 
+    }
+    std::cout<<"\n"; 
+}
+void pointers_Arithmatic()
+{
+    int arr[5] = {10, 20, 30, 40, 50}; 
+    int* ptr = arr + 2; // Point to 3rd element, 30. 
+    int val; 
+
+    std::cout<< ptr - arr <<"\n"; // we can subtract => 2
+
+    val = *ptr++; // use pointer value in val, then increment pointer address
+    print(arr);     // 10 20 30 40 50
+    std::cout<<val<<" "<<ptr - arr<<"\n"; // 30 3
+
+    ptr = arr + 2; // point to 3
+    val = *++ptr; // increment pointer address, then use pointer value in val
+    print(arr);  // 10 20 30 40 50 
+    std::cout<<val<<" "<< ptr - arr <<"\n"; // 40 3
+
+    ptr = arr + 2; // point to 3
+    val = *ptr--; // use pointer value in val, then decrement pointer address
+    print(arr);  // 10 20 30 40 50
+    std::cout<< val << " " << ptr - arr <<"\n"; // 30 1
+
+    ptr = arr + 2; // point to 3
+    val = *--ptr; // decrement pointer address, then use pointer value in val
+    print(arr);
+    std::cout<< val <<" "<< ptr - arr <<"\n"; // 20 1
+
+    ptr = arr + 2; // point to 3
+    val = (*ptr)++; // use pointer value in val, then increment ponter Value
+    print(arr); // 10 20 31 40 50
+    std::cout<<val << " " << ptr - arr <<"\n"; // 30 2
+
+    // ++ precedence > *, we can force precedence by useing () 
+}
+
+void pointers_Arithmatic2()
+{
+    int arr[5] = {10, 20, 30, 40, 50}; 
+    int *ptr = arr; 
+
+    while(ptr != arr + 5)   // we can compare
+        std::cout<< *ptr++ <<" "; // print and move to next
+}
+
 int main()
 {
     //declare_initialize(); 
-    pointers_and_arrays();
+    //pointers_and_arrays();
+    //pointers_Arithmatic(); 
+    pointers_Arithmatic2(); 
 }
