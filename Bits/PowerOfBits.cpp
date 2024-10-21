@@ -247,6 +247,81 @@ void printAllSubsetsGray(int len)
         std::cout<<"\n"; 
     }
 }
+
+
+// Be careful with operators precedence problems. http://en.wikipedia.org/wiki/Operators_in_C_and_C%2B%2B#Operator_precedence
+// X & 7 == 1       is interpreted as       S & (7 == 1)  --> (X & 7) == 1
+// 1 << 10 -1       is interpreted as       = 1 << 9      --> (1 << 10) -1
+
+// Watch out from overflow
+// 1 << 60 Fails. 1 is 32 bitInteger        --> 1LL << 60
+
+
+
+
+
+
+// What about print all subsets of a GIVEN MASK. Easily recursive, let's do it iterative
+// E.g. subsets of 101: 101, 100, 001, 000  -> Each one is tried 0, 1
+
+// Let's first assume, mask was complete and we work on it reverse
+
+void PrintAllSubsetsAllOnes(int len)
+{
+    int mask = (1 << len) -1; // mask = 1111 for len = 4
+
+    for(int i = mask; i >= 0; i = i -1)
+        printNumber(i, len); 
+}
+
+/*
+11111
+11110
+11101
+11100
+11011
+11010
+11001
+11000
+10111
+10110
+10101
+10100
+10011
+10010
+10001
+10000
+01111
+01110
+01101
+01100
+01011
+01010
+01001
+01000
+00111
+00110
+00101
+00100
+00011
+00010
+00001
+00000
+ */
+
+// What about trying the given mask -1 till zero! Wrong 1s are added! Simply remove them 
+// 110101000 -1 = 110100111 & 110101000 = 110100000
+void getAllSubMasks(int mask)
+{
+    for(int subMask = mask; subMask; subMask = (subMask -1) & mask)
+    {
+        printNumber(subMask, 32); // this code doesn't print 0 
+        std::cout<<"\n"; 
+    }
+    // For reverse: ~subMask & mask = subMask ^ mask
+}
+
+
 int main()
 {
     // printNumber(26, countNumBits(26));
@@ -255,5 +330,6 @@ int main()
     // int num = rotate(0b0000000000000000000011001101110, 5); 
     // printNumber_method2(num); 
     //printAllSubsets(3); 
-    printAllSubsetsGray(4); 
+    //printAllSubsetsGray(4); 
+    getAllSubMasks(5); 
 }
