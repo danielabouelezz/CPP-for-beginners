@@ -96,10 +96,80 @@ void pointers_Arithmatic2()
         std::cout<< *ptr++ <<" "; // print and move to next
 }
 
+void const_and_pointers()
+{
+    int val1 = 20; 
+    int *ptr1 = new int; 
+    *ptr1 = 10;     // can change data, it is no  constant
+    ptr1 = &val1;   // can change pointer, it is not constant 
+
+    const int* ptr2 = new int; 
+    // *ptr2 = 20; // can't do that, constant data
+
+    const int* ptr3 = & val1; 
+    // *ptr3 = 20;  // can't do this. constant data
+    ptr3 = ptr1;    // can change pointer, it is not constant
+
+    int* const ptr4 = new int; 
+    *ptr4 = 20; // can change data. It is not constant. 
+    //ptr4 = ptr1; // can't change pointer. it is constant. 
+
+    const int* const ptr5 = &val1; 
+    // *ptr5 = 10;  // can't change data. It is constant. 
+    // ptr5 = ptr1; // can't change pointer. It is constant. 
+
+    const char* name = "hello"; // later, string class.
+    delete ptr1;
+    delete ptr2; 
+    delete ptr4;  
+}
+
+void variable_alias1()
+{
+    int val = 131363; // 00000000 00000010 00000001 00100011
+
+    std::cout<<"Size: "<< sizeof(val) <<"\n"; // 4 bytes
+    std::cout<<"Value: "<< val <<"\n";    // 131363
+    std::cout<<"Adress: "<< &val <<"\n"; 
+
+    int cpy = val;
+    int &ref = val;     // Both ref / val look to the SAME memory locations
+    std::cout<<"ref address: "<< &ref <<"\n"; 
+
+    val += 10; 
+    std::cout<<"cpy: "<<cpy<<"\n"; 
+    std::cout<<"ref: "<<ref<<"\n"; 
+
+    ref *= 10; 
+    std::cout<<"val: "<<val<<"\n"; 
+}
+
+void variable_alias2()
+{
+    int someVal = 10; 
+    std::cout<<"Address of someVal: "<<&someVal<<"\n"; 
+    // long &valRef1 = someVal; // Wrong. Same type needed
+
+    // short &valRef2 = someVal; // Wrong aswell
+
+    // int &someRef = 5;       // Wrong. 5 has no address
+
+    int &a = someVal, &b = someVal, c = someVal;
+
+    std::cout<<"Value of a: "<< a <<" ,Value of b: "<< b<<" ,Value of c: "<<c<<"\n";
+    std::cout<<"Address of a: "<< &a <<" ,Address of b: "<< &b<<" ,Address of c: "<<&c<<"\n";
+    // Note that the address of a and b will be the same as someVale since they are aliases of it, 
+    // but the address of c is deferent since it's a new variable. 
+
+    // & => Automatic dereference
+}
+
 int main()
 {
     //declare_initialize(); 
     //pointers_and_arrays();
     //pointers_Arithmatic(); 
-    pointers_Arithmatic2(); 
+    //pointers_Arithmatic2(); 
+    //const_and_pointers(); // Read the function aswell.
+    variable_alias2();
 }
