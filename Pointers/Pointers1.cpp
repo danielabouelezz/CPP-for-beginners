@@ -148,9 +148,10 @@ void variable_alias2()
 {
     int someVal = 10; 
     std::cout<<"Address of someVal: "<<&someVal<<"\n"; 
+
     // long &valRef1 = someVal; // Wrong. Same type needed
 
-    // short &valRef2 = someVal; // Wrong aswell
+    // short &valRef2 = someVal; // Wrong aswell, different type.
 
     // int &someRef = 5;       // Wrong. 5 has no address
 
@@ -158,10 +159,34 @@ void variable_alias2()
 
     std::cout<<"Value of a: "<< a <<" ,Value of b: "<< b<<" ,Value of c: "<<c<<"\n";
     std::cout<<"Address of a: "<< &a <<" ,Address of b: "<< &b<<" ,Address of c: "<<&c<<"\n";
+
     // Note that the address of a and b will be the same as someVale since they are aliases of it, 
     // but the address of c is deferent since it's a new variable. 
 
     // & => Automatic dereference
+}
+
+// Parameter: Alias vs Pointer
+void fun1(int &a) {}
+void fun2(const int &a) {}
+void fun3(int *a) {}
+
+void alias_vs_pointer()
+{
+    int x = 10; 
+    int* y = new int; 
+
+    fun1(x); 
+    // fun1(y); // can't send pointer
+    // fun1(5); // can't send constant
+
+    fun2(x); 
+    // fun2(y); // can't send pointer
+    fun2(5); // constant is ok
+
+    fun3(&x); 
+    fun3(y); 
+    // fun3(5); // can't send constant
 }
 
 int main()
@@ -171,5 +196,7 @@ int main()
     //pointers_Arithmatic(); 
     //pointers_Arithmatic2(); 
     //const_and_pointers(); // Read the function aswell.
-    variable_alias2();
+    //variable_alias1();
+    //variable_alias2();
+    alias_vs_pointer(); 
 }
