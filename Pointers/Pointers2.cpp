@@ -107,12 +107,68 @@ int buggyPointers(int a, int b)
     return a*b; 
 }
 
+// Passing arrays/pointers
+    // test 1, 2, 3 are actually SAME for compiler
+void test1(int arr[]){} // pointer to an element
+void test2(int arr[5]){} // pointer to an element
+void test3(int *ptr){} // pointer to an element
+void test4(int(&arr)[5]){} // pointer to an array, Force array of size 5
+
+void passingArrays_Pointers()
+{
+    int arr[] = {1,2,3,4,5}; 
+    int* ptr = arr; 
+
+    test1(arr); 
+    test2(arr);
+    test3(arr); 
+    test4(arr); 
+
+    int x = 10; 
+    test2(&x); 
+
+    // test4(&x); 
+    // test4(ptr); 
+    test4(arr); 
+
+    int arr2[3] = {1, 2, 3}; 
+    // test4(arr2); 
+}
+
+// Shooting yourself in the foot
+
+void shootingYourselfInTheFoot()
+{
+    const int SIZE = 10; 
+    int arr[SIZE]; // Good - Fixed size
+
+    int n = 20; 
+    int arr2[n]; // Variable size - NOT standard - Dont't use
+
+    // Don't cast between primitives .. unless you know what you really do
+    short shortVal1 = 1; 
+    int* pIntPtr1 = (int*)&shortVal1; 
+    *pIntPtr1 = 2147483647; // Corrupt memory, change in 4 bytes not 2
+    std::cout<< *pIntPtr1 <<"\n"; // may crach now
+
+    // Don't get part of the memory!
+    // This is true for little endian but not big endian!
+    int value = 770; // 11 00000010
+    char secondByte = *(((char*)&value)+1); // right way using buts (later)
+    std::cout<<(int)secondByte <<"\n"; // 3 on Intel x86 processor (little endian)
+
+    // Don't use C syle case - No compiler time checking
+    // Use static case
+    // int* pIntPtr2 = static_cast<int*>(&shortVal1); Compiler error
+}
+
 int main()
 {
    // new_delete_operators(); 
    // array_of_pointers(); 
    pointer_to_pointer(); 
    // --- See common pointers mistake in function "buggyPointers()"
+   // --- See mistakes in the usage of C++ in function "shootingYourselfInTheFoot()"
 
 }
 
