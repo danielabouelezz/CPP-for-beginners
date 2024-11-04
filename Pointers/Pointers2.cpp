@@ -78,11 +78,41 @@ void pointer_to_pointer()
     free(ptr2d); 
 }
 
+// Commion Mistakes
+
+int buggyPointers(int a, int b)
+{
+    int* ptr1 = new int[8], *ptr2 = new int[8], *ptr3 = new int[8]; 
+    int* salary; // bad practice => garbage
+    int* grade = NULL; // best practice
+
+    if(a == 0) return 1; // Forget to release memory => leak
+
+    delete ptr1; // Wrong, it should be delete[]
+    ptr1 = NULL; // best practice; 
+
+    int* ptr = ptr2; 
+    ++ptr; // move to next memory position
+    delete []ptr; // wrong, delete from array start
+
+    delete []ptr3; 
+    ptr3[2] = 5; // Wrong, memory deleted!
+    delete []ptr3; // Wrong, double free problem 
+
+    delete grade; // It is NULL, no problem/benefit
+    *grade = 10; // Wrong, it is not initialized
+    grade = new int; // one element
+    delete[] grade; // Wrong, should be delete NOT delete[]
+    
+    return a*b; 
+}
+
 int main()
 {
    // new_delete_operators(); 
    // array_of_pointers(); 
    pointer_to_pointer(); 
+   // --- See common pointers mistake in function "buggyPointers()"
 
 }
 
