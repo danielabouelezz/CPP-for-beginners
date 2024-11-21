@@ -38,26 +38,45 @@
 
 // Third example
 
-struct Employee{
+// struct Employee{
+//     std::string name; 
+//     double salary; 
+//     int lucky_numbers[3]; 
+// };
+
+// void print(Employee &emp)
+// {
+//     std::cout << emp.name <<" has salary " << emp.salary <<"k. "; 
+//     std::cout <<" His lucky numbers: "; 
+
+//     for(int i{0}; i < 3; ++i)\
+//         std::cout<< emp.lucky_numbers[i] <<" "; 
+//     std::cout<< "\n"; 
+// }
+
+// int main()
+// {
+//     Employee ali = {"ali ahmed", 120.5, {10, 2, 7}}; 
+
+//     print(ali); 
+//     // ali ahmed has salary 120.5k. His lucky numbers: 10 2 7
+// }
+
+// Fourth example : using pointer
+
+struct Employee {
     std::string name; 
-    double salary; 
-    int lucky_numbers[3]; 
+    int salary; 
 };
-
-void print(Employee &emp)
-{
-    std::cout << emp.name <<" has salary " << emp.salary <<"k. "; 
-    std::cout <<" His lucky numbers: "; 
-
-    for(int i{0}; i < 3; ++i)\
-        std::cout<< emp.lucky_numbers[i] <<" "; 
-    std::cout<< "\n"; 
-}
 
 int main()
 {
-    Employee ali = {"ali ahmed", 120.5, {10, 2, 7}}; 
+    Employee* pEmp = NULL;
+    pEmp = new Employee; 
 
-    print(ali); 
-    // ali ahmed has salary 120.5k. His lucky numbers: 10 2 7
+    // access using arrow operator NOT dot operator
+    pEmp -> name = "mostafa"; 
+    pEmp -> salary = 150; 
+
+    delete pEmp; 
 }
