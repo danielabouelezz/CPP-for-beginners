@@ -64,19 +64,65 @@
 
 // Fourth example : using pointer
 
-struct Employee {
+// struct Employee {
+//     std::string name; 
+//     int salary; 
+// };
+
+// int main()
+// {
+//     Employee* pEmp = NULL;
+//     pEmp = new Employee; 
+
+//     // access using arrow operator NOT dot operator
+//     pEmp -> name = "mostafa"; 
+//     pEmp -> salary = 150; 
+
+//     delete pEmp; 
+// }
+
+// Fith example: sorting struct array based on specific criterea
+
+struct Employee{
     std::string name; 
     int salary; 
+    int position; 
 };
+
+// Writing wrong function may cause RTE
+// When return true, means first object must come before second object
+// if we called cmp(A, B) and returned true, NEBER have cmp(B, A) = true
+// If A == B, then both cmp(A, B) and cmp(B, A) MUST give false
+
+bool cmp(const Employee & first, const Employee &second)    // compare function
+{   // The right comparison should be field by field based on YOUR priority
+
+    // if first field NOT equal, then it determines the answer
+    if(first.salary != second.salary)
+        // Let bigger salary be preferred
+        return first.salary > second.salary; 
+
+    // Now same salary, name to name
+    if(first.name != second.name)
+        return first.name < second.name; 
+    
+    // Now, the remaining is the position. DIRECTLY compare here. No if codition
+    return first.position < second.position; 
+}
 
 int main()
 {
-    Employee* pEmp = NULL;
-    pEmp = new Employee; 
+    Employee emps[5] = {
+        {"baher", 70, 5}, {"zyad", 99, 10}, {"ali", 70, 2}, 
+        {"baher", 70, 5}, {"baher", 70, 3} 
+    };
 
-    // access using arrow operator NOT dot operator
-    pEmp -> name = "mostafa"; 
-    pEmp -> salary = 150; 
+    // cmp function: Let sort based on, bigger salary, 
+        // if tie smaller name, if tie smaller position
+    std::sort(emps, emps + 5, cmp); 
 
-    delete pEmp; 
+    for(int i{0}; i < 5; ++i){
+        Employee & emp = emps[i];
+        std::cout << emp.salary <<" " << emp.name << " " << emp.position <<"\n"; 
+    }
 }
