@@ -53,13 +53,54 @@ struct Employee{
   }
 };
 
-void print(const Employee* empPtr)
-{
-    for(int i{0}; i < 5; i++)
-    {
-        std::cout<<empPtr[i].name << " has salary of: "<< empPtr[i].salary<<"\n"; 
+// void print(const Employee* empPtr)
+// {
+//     for(int i{0}; i < 5; i++)
+//     {
+//         std::cout<<empPtr[i].name << " has salary of: "<< empPtr[i].salary<<"\n"; 
+//     }
+// }
+
+// int main()
+// {
+//     Employee emps[5] = {
+//         {"baher", 70}, {"zyad", 99}, 
+//         {"ali", 70}, {"baher", 50}, {"baher", 70} 
+//     };
+
+//     bool comparison1 = emps[0] < emps[3];  
+//     bool comparison2 = emps[0] == emps[3] ; 
+//     // bool comparison2 = emps[0] > emps[3]; // we did not define
+
+//     std::sort(emps, emps+ 5); // we can now deal as built in types
+//     print(emps); 
+// }
+
+struct SortNameSalary{ // functor allows a class to act like a function
+    int cnter; // functor can have state, plain function can't
+
+    SortNameSalary(){
+        cnter = 0; 
     }
-}
+
+    bool operator()(const Employee &a, const Employee & b) 
+    {
+        ++cnter; // let's know how many times called
+
+        if(a.name != b.name)
+            return a.name < b.name; 
+        return a.salary < b.salary; 
+    }
+};
+
+struct SortSalaryName{
+    bool operator()(const Employee &a, const Employee &b)
+    {
+        if(a.salary != b.salary)
+            return a.salary < b.salary; 
+        return a.name < b.name; 
+    }
+};
 
 int main()
 {
@@ -67,11 +108,7 @@ int main()
         {"baher", 70}, {"zyad", 99}, 
         {"ali", 70}, {"baher", 50}, {"baher", 70} 
     };
-
-    bool comparison1 = emps[0] < emps[3];  
-    bool comparison2 = emps[0] == emps[3] ; 
-    // bool comparison2 = emps[0] > emps[3]; // we did not define
-
-    std::sort(emps, emps+ 5); // we can now deal as built in types
-    print(emps); 
+    std::sort(emps, emps+5, SortNameSalary()); 
+    std::sort(emps, emps+5, SortSalaryName());
+    bool result = SortNameSalary()(emps[0], emps[3]); 
 }
