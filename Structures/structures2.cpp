@@ -26,5 +26,5 @@ int main()
     std::cout<<emp.salary<<"\n";    //100
 
     emp.AddSalary(25); 
-    std::cout<<emp.salary<<"\n"; 
+    std::cout<<emp.salary<<"\n";    // 135
 }
