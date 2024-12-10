@@ -4,27 +4,32 @@ struct Employee{
     std::string name; 
     int salary; 
 
-    void SetSalary(int value)   // Method NOT Function
-    {
-        salary = value; 
+    Employee(int my_salary, std::string my_name){
+        std::cout<<"Creating new object\n"; 
+        name = my_name; 
+        salary = my_salary; 
     }
 
-    void AddSalary(int value); 
+    ~Employee(){
+        std::cout<<"Destroying the object\n"; 
+    }
+
+    void print(); 
 };
 
-void Employee::AddSalary(int value) // We can define method outside too
+void Employee::print(){
+    std::cout<<name <<" has salary : " << salary<<"\n"; 
+}
+
+void print()
 {
-    salary += value; 
+    std::cout<<"Function to say hello \n" ; 
 }
 
 int main()
 {
-    Employee emp; 
-    std::cout<<emp.salary <<"\n";   //garbage, you may be lucky and get zero
-
-    emp.SetSalary(100); 
-    std::cout<<emp.salary<<"\n";    //100
-
-    emp.AddSalary(25); 
-    std::cout<<emp.salary<<"\n";    // 135
+    print(); 
+    Employee emp (2000, "ali");
+    emp.print(); 
+    std::cout<<"BYE\n"; 
 }
